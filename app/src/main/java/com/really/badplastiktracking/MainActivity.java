@@ -1,5 +1,6 @@
 package com.really.badplastiktracking;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,11 +9,25 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private Boolean add = true;
+    private String balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TextView cashView = (TextView) findViewById(R.id.cardTotal);
+        SharedPreferences settings = getPreferences(0);
+        balance = settings.getString("cashBal", "$0.00"); // restore previous balance, or $0.00 if there is none
+        cashView.setText(balance);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences settings = getPreferences(0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("cashBal", balance);
+        editor.commit();
     }
 
     public void changeCash(View v) {
@@ -20,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         float totes = Float.valueOf(cashView.getText().toString().substring(1));
         float multiplier;
 
-        if (add == true)
+        if (add)
             multiplier = 1.00f;
         else
             multiplier = -1.00f;
@@ -57,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 cashView.append(String.format("%.2f", totes));
                 break;
         }
+        balance = cashView.getText().toString();
     }
 
     public void addOrSub(View view) {
