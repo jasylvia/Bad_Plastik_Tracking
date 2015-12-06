@@ -1,15 +1,20 @@
 package com.really.badplastiktracking;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private Boolean add = true;
     private String balance;
+    private Button button;
+    private int BLUE = 0xFF448AFF;
+    private int ORANGE = 0xFFFF5722;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,5 +94,36 @@ public class MainActivity extends AppCompatActivity {
                     add = false;
                     break;
         }
+        switchColors(view, add);
+    }
+
+    public void switchColors(View v, boolean colorType) {
+        int color = BLUE;
+        if (!colorType)
+            color = ORANGE;
+        // Since I'm too lazy to think of a good way to automatic this process
+        this.button = (Button) this.findViewById(R.id.change1);
+        button.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        button.invalidate();
+
+        this.button = (Button) this.findViewById(R.id.change5);
+        button.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        button.invalidate();
+
+        this.button = (Button) this.findViewById(R.id.change10);
+        button.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        button.invalidate();
+
+        this.button = (Button) this.findViewById(R.id.changePenn);
+        button.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        button.invalidate();
+
+        this.button = (Button) this.findViewById(R.id.changeNick);
+        button.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        button.invalidate();
+
+        this.button = (Button) this.findViewById(R.id.changeDime);
+        button.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        button.invalidate();
     }
 }
