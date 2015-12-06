@@ -4,6 +4,10 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -20,10 +24,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
         TextView cashView = (TextView) findViewById(R.id.cardTotal);
         SharedPreferences settings = getPreferences(0);
         balance = settings.getString("cashBal", "$0.00"); // restore previous balance, or $0.00 if there is none
         cashView.setText(balance);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
     }
 
     @Override
@@ -101,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         int color = BLUE;
         if (!colorType)
             color = ORANGE;
-        // Since I'm too lazy to think of a good way to automatic this process
+        // Since I'm too lazy to think of a good way to automate this process
         this.button = (Button) this.findViewById(R.id.change1);
         button.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         button.invalidate();
@@ -125,5 +137,17 @@ public class MainActivity extends AppCompatActivity {
         this.button = (Button) this.findViewById(R.id.changeDime);
         button.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         button.invalidate();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_exit:
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

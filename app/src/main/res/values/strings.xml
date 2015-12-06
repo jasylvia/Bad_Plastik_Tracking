@@ -7,7 +7,8 @@
     <string name="change_penn">$0.01</string>
     <string name="change_nick">$0.05</string>
     <string name="change_dime">$0.10</string>
+
     <string name="add">Add amount</string>
     <string name="sub">Subtract amount</string>
-    <string name="time_default">Last updated some time ago</string>
+    <string name="action_exit">Exit</string>
 </resources>
